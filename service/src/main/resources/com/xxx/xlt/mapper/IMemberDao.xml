@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.xxx.xlt.mapper.IMemberDao">
+    <insert id="addMember">
+        insert into member_t
+        (
+            card_number,
+            name,
+            birthday,
+            telephone,
+            integral,
+            money,
+            payment_type,
+            address,
+            delete_flag,
+            create_by,
+            creation_date,
+            last_update_by,
+            last_update_date
+        ) values
+        (
+            #{member.cardNumber},
+            #{member.name},
+            #{member.birthday},
+            #{member.telephoneNumber},
+            #{member.integral},
+            #{member.money},
+            #{member.paymentType},
+            #{member.address},
+            0,
+            #{member.createBy},
+            SYSDATE(),
+            #{member.lastUpdateBy},
+            SYSDATE()
+        )
+    </insert>
+    <update id="updateMember">
+        update member_t
+        set
+            name = #{member.name},
+            birthday = #{member.birthday},
+            telephone = #{member.telephoneNumber},
+            integral = #{member.integral},
+            money = #{member.money},
+            payment_type = #{member.paymentType},
+            address = #{member.address},
+            last_update_by =  #{member.lastUpdateBy},
+            last_update_date =  SYSDATE()
+        where id = #{member.id}
+    </update>
+    <delete id="deleteMemberById">
+        update member_t t
+        set t.delete_flag = 1
+        where t.id = #{id}
+    </delete>
+
+    <select id="findMemberPageList" resultType="com.xxx.xlt.model.Member">
+        <bind name="key_offset" value="(page.currentPage-1)*page.pageSize"></bind>
+        <include refid="findMemberBase"></include>
+        <include refid="findMemberCondition"></include>
+        order by t.last_update_date desc
+        limit #{page.pageSize} offset #{key_offset};
+    </select>
+
+    <select id="findMemberPageListCount" resultType="java.lang.Integer">
+        select count(0) from member_t t
+        <include refid="findMemberCondition"></include>
+    </select>
+    <select id="findMemberByNumAndName" resultType="com.xxx.xlt.model.Member">
+        <include refid="findMemberBase"></include>
+        where t.delete_flag = 0
+         and  t.card_number = #{member.cardNumber}
+         and  t.name = #{member.name}
+    </select>
+
+    <sql id="findMemberBase">
+        select t.id as id,
+               t.card_number as cardNumber,
+               t.name as name,
+               t.telephone as telephoneNumber,
+               t.birthday as birthday,
+               t.integral as integral,
+               t.money as money,
+               t.payment_type as paymentType,
+               t.address as address,
+               t.create_by as createBy,
+               t.creation_date as creationDate,
+               t.last_update_by as lastUpdateBy,
+               t.last_update_date as lastUpdateDate
+        from member_t t
+    </sql>
+    <sql id="findMemberCondition">
+        where t.delete_flag = 0
+        <if test='member.id!=null and member.id!=""'>
+            and t.id=#{member.id}
+        </if>
+        <if test='member.cardNumber!=null and member.cardNumber!=""'>
+            and t.card_number=#{member.cardNumber}
+        </if>
+        <if test='member.name!=null and member.name!=""'>
+            and t.name=#{member.name}
+        </if>
+        <if test='member.telephoneNumber!=null and member.telephoneNumber!=""'>
+            and t.telephone=#{member.telephoneNumber}
+        </if>
+        <if test='member.paymentType!=null and member.paymentType!=""'>
+            and t.payment_type=#{member.paymentType}
+        </if>
+    </sql>
+</mapper>

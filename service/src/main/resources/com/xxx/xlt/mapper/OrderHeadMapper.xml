@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.xxx.xlt.mapper.IOrderHeadMapper">
+    <select id="findOrderHeadPageList" resultType="com.xxx.xlt.model.OrderHead">
+        <bind name="key_offset" value="(page.currentPage-1)*page.pageSize"></bind>
+        <include refid="findOrderHeadBase"></include>
+        <include refid="queryCondition"></include>
+        order by t.order_date desc
+        limit #{page.pageSize} offset #{key_offset};
+    </select>
+
+    <select id="findOrderHeadPageListCount" resultType="java.lang.Integer">
+        select count(0) from order_head_t t
+        <include refid="queryCondition"></include>
+    </select>
+
+    <sql id="findOrderHeadBase">
+        select t.order_head_id as orderHeadId,
+               t.order_date as orderDate,
+               t.order_no as orderNo
+        from order_head_t t
+    </sql>
+    <sql id="queryCondition">
+        where 1=1
+        <if test='vo.orderHeadId!=null'>
+            and t.order_head_id=#{vo.orderHeadId}
+        </if>
+        <if test='vo.orderDate!=null and vo.orderDate!=""'>
+            and t.order_date=#{vo.orderDate}
+        </if>
+        <if test='vo.orderNo!=null and vo.orderNo!=""'>
+            and t.order_no=#{vo.orderNo}
+        </if>
+    </sql>
+</mapper>

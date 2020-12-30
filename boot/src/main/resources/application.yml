@@ -1,0 +1,76 @@
+server:
+  port: 8088
+
+spring:
+  datasource:
+    name: xlt-ds
+    type: com.alibaba.druid.pool.DruidDataSource
+    dynamic:
+      primary: db1 # 配置默认数据库
+      datasource:
+        db1: # 数据源1配置
+          url: jdbc:mysql://localhost:3306/xlt?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=GMT%2B8&useSSL=false
+          username: root
+          password: root
+          driver-class-name: com.mysql.cj.jdbc.Driver
+        db2: # 数据源2配置
+          url: jdbc:mysql://192.168.26.128:8066/TEST?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=GMT%2B8&useSSL=false
+          username: root
+          password: root
+          driver-class-name: com.mysql.cj.jdbc.Driver
+    druid:  #druid相关配置
+      filters: stat #监控统计拦截的filters
+      initial-size: 1  #配置初始化大小/最小/最大
+      min-idle: 1
+      max-active: 20
+      max-wait: 60000 #获取连接等待超时时间
+      time-between-eviction-runs-millis: 60000  #间隔多久进行一次检测，检测需要关闭的空闲连接
+      min-evictable-idle-time-millis: 300000  #一个连接在池中最小生存的时间
+      validation-query: SELECT 'x'
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: false #打开PSCache，并指定每个连接上PSCache的大小。oracle设为true，mysql设为false。分库分表较多推荐设置为false
+      max-pool-prepared-statement-per-connection-size: 20
+  redis: # redis配置
+#    host: 127.0.0.1
+#    port: 6379
+#    password: xlt
+    database: 0
+    lettuce:
+      pool:
+        # 连接池最大连接数 默认8 ，负数表示没有限制
+        max-active: 8
+        # 连接池最大阻塞等待时间（使用负值表示没有限制） 默认-1
+        max-wait: -1
+        # 连接池中的最大空闲连接 默认8
+        max-idle: 8
+        # 连接池中的最小空闲连接 默认0
+        min-idle: 0
+  rabbitmq: #MQ配置
+    host: 127.0.0.1
+    port: 5672
+    username: root
+    password: root
+    #虚拟host 可以不设置,使用server默认host
+    virtual-host: JCcccHost
+
+mybatis:
+  config-location: classpath:config/mybatis-config.xml
+  mapper-locations: classpath*:com/xxx/xlt/mapper/*.xml
+  type-aliases-package: com.xxx.xlt.model
+
+person:
+  name: xlt
+  number: 00498628
+
+
+#pagehelper
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+  returnPageInfo: check
+
+
