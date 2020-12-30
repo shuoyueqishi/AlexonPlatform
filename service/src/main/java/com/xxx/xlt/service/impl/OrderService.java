@@ -8,8 +8,9 @@ import com.xxx.xlt.model.OrderLine;
 import com.xxx.xlt.model.Page;
 import com.xxx.xlt.service.api.IOrderService;
 import com.xxx.xlt.utils.redis.RedisCacheable;
-import org.apache.log4j.Logger;
 import org.mybatis.spring.annotation.MapperScan;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ import java.util.List;
 @Service
 @MapperScan("com.xxx.xlt.mapper")
 public class OrderService implements IOrderService {
-    private static Logger logger = Logger.getLogger(OrderService.class);
+    private static Logger logger = LoggerFactory.getLogger(OrderService.class);
 
     @Autowired
     private IOrderHeadMapper orderHeadMapper;

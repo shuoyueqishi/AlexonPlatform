@@ -1,14 +1,13 @@
 package com.xxx.xlt.controller;
 
 import com.xxx.xlt.utils.redis.RedisUtil;
-import org.apache.log4j.Logger;
 import org.redisson.api.RBloomFilter;
 import org.redisson.api.RLock;
 import org.redisson.api.RQueue;
 import org.redisson.api.RedissonClient;
-import org.redisson.config.Config;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 @RestController
 @RequestMapping("/redisson")
 public class RedissonController {
-    private static Logger logger = Logger.getLogger(RedissonController.class);
+    private static Logger logger = LoggerFactory.getLogger(RedissonController.class);
 
     private static final String PRODUCT = "MoonCake";
     private static final String AA= "aa";

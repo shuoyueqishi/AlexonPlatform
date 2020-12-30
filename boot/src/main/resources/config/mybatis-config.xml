@@ -8,7 +8,7 @@
     <!-- 指定 MyBatis 所用日志的具体实现 -->
     <settings>
         <setting name="lazyLoadingEnabled" value="false" />
-        <setting name="logImpl" value="LOG4J" />
+        <setting name="logImpl" value="LOG4J2" />
     </settings>
 
     <environments default="mysql">

@@ -2,12 +2,13 @@ package com.xxx.xlt.utils.redis;
 
 
 import com.xxx.xlt.utils.common.ObjectUtil;
-import org.apache.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.CodeSignature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.expression.Expression;
@@ -17,7 +18,6 @@ import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
-import java.util.Observer;
 import java.util.concurrent.TimeUnit;
 
 
@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class RedisCacheableAspect {
 
-    private static Logger logger = Logger.getLogger(RedisCacheableAspect.class);
+    private static Logger logger = LoggerFactory.getLogger(RedisCacheableAspect.class);
     private static final ExpressionParser expressionParser = new SpelExpressionParser();
 
     @Autowired

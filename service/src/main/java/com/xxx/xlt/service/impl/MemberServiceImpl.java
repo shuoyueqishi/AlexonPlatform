@@ -6,9 +6,10 @@ import com.xxx.xlt.service.api.*;
 import com.xxx.xlt.model.Member;
 import com.xxx.xlt.model.MemberResponse;
 import com.xxx.xlt.model.Page;
-import org.apache.log4j.Logger;
 import org.mybatis.spring.annotation.MapperScan;
 import org.omg.CORBA.portable.ApplicationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -19,7 +20,7 @@ import java.util.List;
 @Service("memberService")
 @MapperScan("com.xxx.xlt.mapper")
 public class MemberServiceImpl implements IMemberService {
-    private static Logger logger = Logger.getLogger(MemberServiceImpl.class);
+    private static Logger logger = LoggerFactory.getLogger(MemberServiceImpl.class);
 
     @Autowired
     private IMemberDao memberDao;
