@@ -11,7 +11,7 @@ fatal： 级别比较高了。重大错误，这种级别你可以直接停止�
 <Configuration status="OFF">
     <!-- 定义日志存放目录 -->
     <properties>
-        <property name="logPath">logs</property>
+        <property name="logPath">xLogs</property>
         <!-- 输出日志的格式 -->
         <!--
                 %d{yyyy-MM-dd HH:mm:ss, SSS} : 日志生产时间
