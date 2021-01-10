@@ -13,7 +13,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class BasicResponse implements Serializable {
     private static final long serialVersionUID = 3133901045675557228L;
-    private String message;
-    private String code;
-    private Constant.Status status;
+    private String message="success";
+    private String code="200";
+    private Constant.Status status=Constant.Status.SUCCESS;
 }

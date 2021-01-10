@@ -2,6 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <mapper namespace="com.xxx.xlt.mapper.IOrderHeadMapper">
+    <insert id="insertOrderHead">
+        insert into order_head_t (order_head_id,order_date,order_no)
+        values (#{vo.orderHeadId},#{vo.orderDate},#{vo.orderNo})
+    </insert>
     <select id="findOrderHeadPageList" resultType="com.xxx.xlt.model.OrderHead">
         <bind name="key_offset" value="(page.currentPage-1)*page.pageSize"></bind>
         <include refid="findOrderHeadBase"></include>

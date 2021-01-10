@@ -28,4 +28,11 @@ public interface IOrderHeadMapper {
      * @return 返回总数
      */
     int findOrderHeadPageListCount(@Param("vo") OrderHead orderHead);
+
+    /**
+     * 插入订单头数据
+     * @param orderHead 数据
+     * @return 返回值
+     */
+    int insertOrderHead(@Param("vo") OrderHead orderHead);
 }

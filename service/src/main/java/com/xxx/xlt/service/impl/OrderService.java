@@ -7,13 +7,20 @@ import com.xxx.xlt.model.OrderHead;
 import com.xxx.xlt.model.OrderLine;
 import com.xxx.xlt.model.Page;
 import com.xxx.xlt.service.api.IOrderService;
+import com.xxx.xlt.utils.common.SnowflakeIdGenerator;
+import com.xxx.xlt.utils.exception.CommonException;
+import com.xxx.xlt.utils.idempotent.method2.Idempotent;
 import com.xxx.xlt.utils.redis.RedisCacheable;
 import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -49,8 +56,20 @@ public class OrderService implements IOrderService {
     }
 
     @Override
+    @Idempotent(value="OrderService.addNewOrderHead",expireMillis=100L)
     public CommonResponse<OrderHead> addNewOrderHead(OrderHead orderHead) {
-        return null;
+        CommonResponse<OrderHead> response = new CommonResponse<>();
+        if (StringUtils.isEmpty(orderHead.getOrderDate())) {
+            throw new CommonException("orderDate is empty.");
+        }
+        if (StringUtils.isEmpty(orderHead.getOrderNo())) {
+            throw new CommonException("orderNo is empty.");
+        }
+        Long orderId = SnowflakeIdGenerator.generateId();
+        orderHead.setOrderHeadId(orderId);
+        orderHeadMapper.insertOrderHead(orderHead);
+        response.setData(Collections.singletonList(orderHead));
+        return response;
     }
 
     @Override
