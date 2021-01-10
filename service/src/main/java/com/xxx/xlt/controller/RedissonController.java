@@ -88,7 +88,6 @@ public class RedissonController {
                     cnt++;
                 }
             }
-//            xltRecords.delete();
             logger.info("total="+TOTAL+",error cnt="+cnt);
             bloomFilterLock.unlock();
         }

@@ -22,13 +22,12 @@ public class TokenService implements ITokenService {
      */
     @Override
     public String createToken() {
-        String str = UUID.randomUUID().toString().replace("-", "");
-        StringBuilder token = new StringBuilder();
+        String token = UUID.randomUUID().toString().replace("-", "");
         try {
-            token.append(RedisConstant.PREFIX).append(str);
-            RedisUtil.set(token.toString(), token.toString(), 1000L);
-            if (!StringUtils.isEmpty(token.toString())) {
-                return token.toString();
+            String key = RedisConstant.PREFIX + RedisConstant.API_TOKEN;
+            RedisUtil.set(key, token, 30L);
+            if (!StringUtils.isEmpty(token)) {
+                return token;
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -45,20 +44,23 @@ public class TokenService implements ITokenService {
     @Override
     public boolean checkToken(HttpServletRequest request) throws Exception {
 
-        String token = request.getHeader(RedisConstant.TOKEN);
+        String token = request.getHeader(RedisConstant.API_TOKEN);
         if (StringUtils.isEmpty(token)) {// header中不存在token
-            token = request.getParameter(RedisConstant.TOKEN);
+            token = request.getParameter(RedisConstant.API_TOKEN);
             if (StringUtils.isEmpty(token)) {// parameter中也不存在token
                 throw new CommonException(ApiResult.BAD_ARGUMENT);
             }
         }
 
-        String key = RedisConstant.PREFIX + RedisConstant.TOKEN;
+        String key = RedisConstant.PREFIX + RedisConstant.API_TOKEN;
         if (!RedisUtil.hasKey(key)) {
             throw new CommonException(ApiResult.REPETITIVE_REQUEST);
         }
-
-        RedisUtil.del(token);
+       if(RedisUtil.get(key).equals(token)) {
+           RedisUtil.del(token);
+       } else {
+           throw new CommonException(ApiResult.API_TOKEN_ERROR);
+       }
         return true;
     }
 }
