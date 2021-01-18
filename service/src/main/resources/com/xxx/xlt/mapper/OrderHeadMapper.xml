@@ -6,6 +6,16 @@
         insert into order_head_t (order_head_id,order_date,order_no)
         values (#{vo.orderHeadId},#{vo.orderDate},#{vo.orderNo})
     </insert>
+    <insert id="batchInsertOrderHead">
+        <if test="list.size() !=0">
+            insert into order_head_t (order_head_id,order_date,order_no)
+            values
+            <foreach collection ="list" item="vo" index= "index" separator =",">
+              (#{vo.orderHeadId},#{vo.orderDate},#{vo.orderNo})
+            </foreach >
+        </if>
+    </insert>
+
     <select id="findOrderHeadPageList" resultType="com.xxx.xlt.model.OrderHead">
         <bind name="key_offset" value="(page.currentPage-1)*page.pageSize"></bind>
         <include refid="findOrderHeadBase"></include>

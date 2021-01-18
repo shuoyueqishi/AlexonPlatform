@@ -6,6 +6,7 @@ import com.xxx.xlt.model.OrderHead;
 import com.xxx.xlt.model.Page;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.aspectj.weaver.ast.Or;
 import org.omg.CORBA.portable.ApplicationException;
 import org.springframework.stereotype.Component;
 
@@ -35,4 +36,11 @@ public interface IOrderHeadMapper {
      * @return 返回值
      */
     int insertOrderHead(@Param("vo") OrderHead orderHead);
+
+    /**
+     * 批量插入
+     * @param list 列表
+     * @return 返回值
+     */
+    int batchInsertOrderHead(@Param("list")List<OrderHead> list);
 }
