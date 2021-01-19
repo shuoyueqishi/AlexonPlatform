@@ -22,14 +22,10 @@ public class OrderHeadListener extends AnalysisEventListener<OrderHead> {
     private static final int BATCH_COUNT = 5;
     private List<OrderHead> list = new ArrayList<>();
 
-
-    @Autowired
     private IOrderHeadMapper orderHeadMapper;
 
-    public OrderHeadListener() {
-        if(orderHeadMapper == null) {
-            orderHeadMapper = AppContextUtil.getBean(IOrderHeadMapper.class);
-        }
+    public OrderHeadListener(IOrderHeadMapper orderHeadMapper) {
+        this.orderHeadMapper = orderHeadMapper;
     }
 
     /**

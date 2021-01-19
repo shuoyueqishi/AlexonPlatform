@@ -1,6 +1,7 @@
 package com.xxx.xlt.service.api;
 
 import com.xxx.xlt.model.*;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface IOrderService {
     CommonResponse<OrderHead> findOrderHeadPageList(OrderHead orderHead, Page page);
@@ -10,6 +11,8 @@ public interface IOrderService {
     CommonResponse<OrderHead> addNewOrderHead(OrderHead orderHead);
 
     CommonResponse<OrderHead> updateOrderHead(OrderHead orderHead);
+
+    BasicResponse importOrderHead(MultipartFile file);
 
     CommonResponse<OrderLine> finOrderLinePageList(OrderLine orderLine, Page page);
 

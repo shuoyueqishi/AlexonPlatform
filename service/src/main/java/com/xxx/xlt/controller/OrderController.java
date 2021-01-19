@@ -5,6 +5,7 @@ import com.xxx.xlt.service.impl.OrderService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController(value = "orderController")
 @RequestMapping("/order")
@@ -33,5 +34,10 @@ public class OrderController {
     @RequestMapping(value = "/head/add", method = RequestMethod.POST, produces = "application/json")
     public CommonResponse<OrderHead> addOrderHead(@RequestBody() OrderHead orderHead) {
         return orderService.addNewOrderHead(orderHead);
+    }
+
+    @RequestMapping(value = "/head/import", method = RequestMethod.POST, produces = "application/json")
+    public BasicResponse importOrderHead(MultipartFile file) {
+        return orderService.importOrderHead(file);
     }
 }

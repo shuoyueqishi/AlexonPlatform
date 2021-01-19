@@ -1,11 +1,10 @@
 package com.xxx.xlt.service.impl;
 
+import com.alibaba.excel.EasyExcel;
 import com.xxx.xlt.constant.Constant;
+import com.xxx.xlt.excel.imports.OrderHeadListener;
 import com.xxx.xlt.mapper.IOrderHeadMapper;
-import com.xxx.xlt.model.CommonResponse;
-import com.xxx.xlt.model.OrderHead;
-import com.xxx.xlt.model.OrderLine;
-import com.xxx.xlt.model.Page;
+import com.xxx.xlt.model.*;
 import com.xxx.xlt.service.api.IOrderService;
 import com.xxx.xlt.utils.common.SnowflakeIdGenerator;
 import com.xxx.xlt.utils.exception.CommonException;
@@ -17,7 +16,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -69,6 +71,20 @@ public class OrderService implements IOrderService {
         orderHead.setOrderHeadId(orderId);
         orderHeadMapper.insertOrderHead(orderHead);
         response.setData(Collections.singletonList(orderHead));
+        return response;
+    }
+
+    @Override
+    public BasicResponse importOrderHead(MultipartFile file) {
+        BasicResponse response = new BasicResponse();
+        InputStream inputStream = null;
+        try {
+            inputStream = file.getInputStream();
+            EasyExcel.read(inputStream, OrderHead.class,new OrderHeadListener(orderHeadMapper)).sheet().doRead();
+        } catch (IOException e) {
+            e.printStackTrace();
+            response.setMessage(e.getMessage());
+        }
         return response;
     }
 
