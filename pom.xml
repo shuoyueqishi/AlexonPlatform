@@ -26,7 +26,14 @@
     </properties>
 
     <dependencies>
-<!--        easy excel-->
+<!--        http RestTemplate-->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.6</version>
+        </dependency>
+
+        <!--        easy excel-->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>easyexcel</artifactId>
