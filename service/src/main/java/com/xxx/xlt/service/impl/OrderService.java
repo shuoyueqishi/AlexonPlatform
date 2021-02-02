@@ -1,6 +1,8 @@
 package com.xxx.xlt.service.impl;
 
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.ExcelWriter;
+import com.alibaba.excel.write.metadata.WriteSheet;
 import com.xxx.xlt.constant.Constant;
 import com.xxx.xlt.excel.imports.OrderHeadListener;
 import com.xxx.xlt.mapper.IOrderHeadMapper;
@@ -84,6 +86,25 @@ public class OrderService implements IOrderService {
         } catch (IOException e) {
             e.printStackTrace();
             response.setMessage(e.getMessage());
+        }
+        return response;
+    }
+
+    @Override
+    public BasicResponse exportOrderHead(OrderHead orderHead) {
+        BasicResponse response = new BasicResponse();
+        String fileName =  "simpleWrite" + System.currentTimeMillis() + ".xlsx";
+        // 这里 需要指定写用哪个class去写
+        ExcelWriter excelWriter = null;
+        try {
+            excelWriter = EasyExcel.write(fileName, OrderHead.class).build();
+            WriteSheet writeSheet = EasyExcel.writerSheet("模板").build();
+            excelWriter.write(data(), writeSheet);
+        } finally {
+            // 千万别忘记finish 会帮忙关闭流
+            if (excelWriter != null) {
+                excelWriter.finish();
+            }
         }
         return response;
     }

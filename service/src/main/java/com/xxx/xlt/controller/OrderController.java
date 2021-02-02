@@ -40,4 +40,9 @@ public class OrderController {
     public BasicResponse importOrderHead(MultipartFile file) {
         return orderService.importOrderHead(file);
     }
+
+    @RequestMapping(value = "/head/export", method = RequestMethod.POST, produces = "application/json")
+    public BasicResponse exportOrderHead(OrderHead orderHead) {
+        return orderService.exportOrderHead(orderHead);
+    }
 }

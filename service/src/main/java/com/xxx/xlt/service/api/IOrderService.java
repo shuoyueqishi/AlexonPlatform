@@ -14,6 +14,8 @@ public interface IOrderService {
 
     BasicResponse importOrderHead(MultipartFile file);
 
+    BasicResponse exportOrderHead(OrderHead orderHead);
+
     CommonResponse<OrderLine> finOrderLinePageList(OrderLine orderLine, Page page);
 
     CommonResponse<OrderLine> deleteOrderLine(int lineId);
