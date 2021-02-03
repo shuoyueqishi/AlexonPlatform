@@ -18,6 +18,11 @@ public class Page implements Serializable {
     private int total;
     private int totalPages;
 
+    public Page(int pageSize,int currentPage) {
+        this.setCurrentPage(currentPage);
+        this.pageSize=pageSize;
+    }
+
     public void setCurrentPage(int currentPage) {
         if(currentPage<=0){
             currentPage=1;

@@ -99,7 +99,14 @@ public class OrderService implements IOrderService {
         try {
             excelWriter = EasyExcel.write(fileName, OrderHead.class).build();
             WriteSheet writeSheet = EasyExcel.writerSheet("模板").build();
-            excelWriter.write(data(), writeSheet);
+            Page page = new Page(100,1);
+            int totals = orderHeadMapper.findOrderHeadPageListCount(orderHead);
+            page.setTotal(totals);
+            int totalPages = page.getTotalPages();
+            logger.info("totalPages="+totalPages);
+            List<OrderHead> headList = orderHeadMapper.findOrderHeadPageList(orderHead, page);
+            excelWriter.write(headList, writeSheet);
+            logger.info("export order head success");
         } finally {
             // 千万别忘记finish 会帮忙关闭流
             if (excelWriter != null) {
