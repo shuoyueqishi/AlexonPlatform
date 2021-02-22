@@ -3,6 +3,8 @@ package com.xxx.xlt.service.xxl.job;
 import com.xxl.job.core.biz.model.ReturnT;
 import com.xxl.job.core.handler.annotation.XxlJob;
 import com.xxl.job.core.log.XxlJobLogger;
+import com.xxx.xlt.utils.common.AppContextUtil;
+import com.xxx.xlt.utils.common.MailServiceUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -31,11 +33,13 @@ public class SampleXxlJob {
     @XxlJob("demoJobHandler")
     public ReturnT<String> demoJobHandler(String param) throws Exception {
         logger.info("XXL-JOB, Hello World.");
+        MailServiceUtil mailServiceUtil = AppContextUtil.getBean(MailServiceUtil.class);
 
         for (int i = 0; i < 5; i++) {
             XxlJobLogger.log("beat at:" + i);
             TimeUnit.SECONDS.sleep(2);
         }
+        mailServiceUtil.sendSimpleMail("xulitao666@gmail.com","我爱美蓉蓉","我爱曾莹蓉，她是的最爱，我的大宝贝");
         return ReturnT.SUCCESS;
     }
 

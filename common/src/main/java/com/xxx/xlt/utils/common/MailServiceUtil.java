@@ -17,7 +17,7 @@ import java.io.File;
 
 @Component
 public class MailServiceUtil {
-    private static final Logger logger = LoggerFactory.getLogger(MailServiceUtil.class);
+    private Logger logger = LoggerFactory.getLogger(MailServiceUtil.class);
 
     @Autowired
     private JavaMailSender mailSender;
