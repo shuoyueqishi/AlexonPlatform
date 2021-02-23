@@ -17,7 +17,7 @@ import java.io.File;
 
 @Component
 public class MailServiceUtil {
-    private Logger logger = LoggerFactory.getLogger(MailServiceUtil.class);
+    private static Logger logger = LoggerFactory.getLogger(MailServiceUtil.class);
 
     @Autowired
     private JavaMailSender mailSender;
@@ -82,6 +82,7 @@ public class MailServiceUtil {
         helper.setSubject(subject);
         helper.setText(content, true);
         mailSender.send(message);
+        logger.info("send email with html successfully");
     }
 
     /**
@@ -103,5 +104,6 @@ public class MailServiceUtil {
         String fileName = file.getFilename();
         helper.addAttachment(fileName, file);
         mailSender.send(message);
+        logger.info("send email with attachment successfully");
     }
 }
