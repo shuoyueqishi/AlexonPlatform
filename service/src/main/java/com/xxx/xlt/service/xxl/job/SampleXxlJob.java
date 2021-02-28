@@ -40,7 +40,7 @@ public class SampleXxlJob {
             TimeUnit.MILLISECONDS.sleep(20);
         }
         mailServiceUtil.sendSimpleMail("xulitao666@gmail.com","我爱美蓉蓉","我爱曾莹蓉，她是的最爱，我的大宝贝");
-        mailServiceUtil.sendAttachmentsMail("xulitao666@gmail.com","我爱美蓉蓉","我爱曾莹蓉，她是的最爱，我的大宝贝","D:\\MyProjects\\JAVA\\AlexonPlatform\\simpleWrite1612367081267.xlsx");
+//        mailServiceUtil.sendAttachmentsMail("xulitao666@gmail.com","我爱美蓉蓉","我爱曾莹蓉，她是的最爱，我的大宝贝","D:\\MyProjects\\JAVA\\AlexonPlatform\\simpleWrite1612367081267.xlsx");
 
         return ReturnT.SUCCESS;
     }

@@ -2,6 +2,10 @@ server:
   port: 8081
 
 spring:
+  #项目名字
+  application:
+    name: rabbitmq-provider
+  # 数据源
   datasource:
     name: xlt-ds
     type: com.alibaba.druid.pool.DruidDataSource
@@ -32,6 +36,7 @@ spring:
       test-on-return: false
       pool-prepared-statements: false #打开PSCache，并指定每个连接上PSCache的大小。oracle设为true，mysql设为false。分库分表较多推荐设置为false
       max-pool-prepared-statement-per-connection-size: 20
+  # redis
   redis: # redis配置
     host: 192.168.26.128
     port: 6379
@@ -47,13 +52,19 @@ spring:
         max-idle: 8
         # 连接池中的最小空闲连接 默认0
         min-idle: 0
-  rabbitmq: #MQ配置
-    host: 127.0.0.1
+  # MQ配置
+  rabbitmq:
+    host: 192.168.26.128
     port: 5672
-    username: root
-    password: root
+    username: xlt
+    password: xlt
     # 虚拟host 可以不设置,使用server默认host
-    virtual-host: JCcccHost
+    virtual-host: XltHost
+    listener:
+      simple:
+        #acknowledge-mode: manual #设置确认模式手工确认
+        concurrency: 3 #消费者最小数量
+        max-concurrency: 10 # 消费者最大数量
   #邮箱设置
   mail:
     host: smtp.qq.com
@@ -70,6 +81,8 @@ spring:
         smtp:
           socketFactory:
             class: javax.net.ssl.SSLSocketFactory
+
+# mybatis配置
 mybatis:
   config-location: classpath:config/mybatis-config.xml
   mapper-locations: classpath*:com/xxx/xlt/mapper/*.xml
@@ -79,6 +92,7 @@ mybatis:
 logging:
   config: classpath:log/log4j2.xml
 
+# http pool配置
 http_pool:
   max_total: 200
   default_max_per_route: 100
@@ -87,7 +101,7 @@ http_pool:
   socket_timeout: 65000
   validate_after_inactivity: 2000
 
-# 分布式调度任务配置
+# 分布式调度xxl-job任务配置
 xxl:
   job:
     # 执行器通讯TOKEN [选填]：非空时启用；
